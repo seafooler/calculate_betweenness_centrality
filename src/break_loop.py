@@ -1,13 +1,13 @@
 #! /usr/bin/python
 
-visited = {}
+# visited = {}
 adj_list = {}
 
 class Graph(object):
 
-    def __init__(self):
-        self.visited = {}
-        self.adj_list = {}
+    # def __init__(self):
+        # self.visited = {}
+        # self.adj_list = {}
 
     def build_adjacent_list(self, matrix):
         for line in matrix:
@@ -17,17 +17,21 @@ class Graph(object):
                 adj_list[line[0]].append((line[1], line[2], 1))
 
     def remove_loop(self):
-        def depth_first_find_loop(cur_node):
-            visited[cur_node] = True
-            print(str(cur_node) + " ")
+        def depth_first_find_loop(cur_node, path, once_visited):
+            once_visited[cur_node] = True
+            path.append(cur_node)
             if adj_list.has_key(cur_node):
                 for nb in adj_list[cur_node]:
-                    if not nb[0] in visited:
-                        depth_first_find_loop(nb[0])
+                    # path.append(nb[0])
+                    if not nb[0] in once_visited:
+                        tmp_path = list(path)
+                        tmp_visited = once_visited.copy()
+                        depth_first_find_loop(nb[0], tmp_path, tmp_visited)
+                    elif nb[0] == path[0]:
+                        print(path)
 
         for key in adj_list:
-            if not key in visited:
-                depth_first_find_loop(key)
+            depth_first_find_loop(key, [], {})
 
 if __name__ == '__main__':
     mat = (
