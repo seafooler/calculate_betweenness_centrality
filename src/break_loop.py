@@ -9,26 +9,34 @@ class Graph(object):
         # self.visited = {}
         # self.adj_list = {}
 
+    # Build adjacent_list from matrix
     def build_adjacent_list(self, matrix):
         for line in matrix:
             if not adj_list.has_key(line[0]):
-                adj_list[line[0]] = [(line[1], line[2], 1)]
+                adj_list[line[0]] = {}
+                adj_list[line[0]][line[1]] = (line[2], 1)
             else:
-                adj_list[line[0]].append((line[1], line[2], 1))
+                adj_list[line[0]][line[1]] = (line[2], 1)
 
     def remove_loop(self):
         def depth_first_find_loop(cur_node, path, once_visited):
             once_visited[cur_node] = True
             path.append(cur_node)
             if adj_list.has_key(cur_node):
-                for nb in adj_list[cur_node]:
-                    # path.append(nb[0])
-                    if not nb[0] in once_visited:
+                for nb_key in adj_list[cur_node]:
+                    if not nb_key in once_visited:
                         tmp_path = list(path)
                         tmp_visited = once_visited.copy()
-                        depth_first_find_loop(nb[0], tmp_path, tmp_visited)
-                    elif nb[0] == path[0]:
-                        print(path)
+                        depth_first_find_loop(nb_key, tmp_path, tmp_visited)
+                    elif nb_key == path[0]:
+                        weight = []
+                        tmp_path = list(path)
+                        tmp_path.append(path[0])
+                        print(tmp_path)
+                        tmp_path_len = len(tmp_path)
+                        for i in range(0, tmp_path_len-1):
+                            weight.append(adj_list[tmp_path[i]][tmp_path[i+1]][0])
+                        print(weight)
 
         for key in adj_list:
             depth_first_find_loop(key, [], {})
