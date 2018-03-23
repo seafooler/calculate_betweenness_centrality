@@ -43,7 +43,10 @@ class Graph(object):
                             if flag:
                                 print(tmp_path)
                                 for i in range(0, tmp_path_len-1):
-                                    adj_list[tmp_path[i]][tmp_path[i+1]][1] = 0
+                                    for k, v in adj_list[tmp_path[i]].items():
+                                        if v[0] >= adj_list[tmp_path[i]][tmp_path[i+1]][0]:
+                                            v[1] = 0
+                                    # adj_list[tmp_path[i]][tmp_path[i+1]][1] = 0
 
         for key in adj_list:
             depth_first_find_loop(key, [], {})
@@ -52,16 +55,22 @@ if __name__ == '__main__':
     mat = (
         (1, 3, 11),
         (1, 6, 10),
+        # (1, 6, 10),
+        #(1, 6, 3), # (1, 6, 10),
         (2, 4, 3),
         (4, 3, 4),
         (2, 3, 2),
         (5, 3, 3),
         (5, 4, 7),
         (5, 2, 5),
+        # (5, 2, 5),
         (6, 4, 7),
         (2, 1, 9),
+        # (2, 1, 9),
         (6, 5, 11),
+        # (6, 5, 11),
         (6, 2, 1),
+        #(6, 2, 5), # (6, 2, 1),
         (8, 9, 5)
     )
     g = Graph()
