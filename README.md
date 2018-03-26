@@ -1,2 +1,2 @@
 # break_loop
-An algorithm to break the edge-sequential loop in a graph
+An algorithm to calculate the betweenness centrality of a graph, whose edge-sequential loops are broken first.
